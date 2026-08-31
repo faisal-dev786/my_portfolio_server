@@ -6,6 +6,7 @@ import { connectDB } from './config/db.js';
 import authRouter from './routes/authRoutes.js';
 import graphixContactRouter from './routes/graphixContactRoutes.js';
 import quranAcademyContactRouter from './routes/quranAcademyContactRoutes.js';
+import visualsContactRouter from './routes/visualsContactRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -44,7 +45,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/graphix', graphixContactRouter);
 app.use('/api/quran-academy', quranAcademyContactRouter);
-
+app.use('/api/visuals', visualsContactRouter);
 app.get('/', (req, res) => {
     res.status(200).json({
         message: 'API is running successfully'
