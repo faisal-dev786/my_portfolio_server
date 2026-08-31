@@ -5,6 +5,7 @@ import cors from 'cors';
 import { connectDB } from './config/db.js';
 import authRouter from './routes/authRoutes.js';
 import graphixContactRouter from './routes/graphixContactRoutes.js';
+import quranAcademyContactRouter from './routes/quranAcademyContactRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/graphix', graphixContactRouter);
+app.use('/api/quran-academy', quranAcademyContactRouter);
 
 app.get('/', (req, res) => {
     res.status(200).json({
