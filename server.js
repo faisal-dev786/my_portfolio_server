@@ -41,7 +41,7 @@ connectDB();
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
-app.use('/api/graphixcontacts', graphixContactRouter);
+app.use('/api/graphix', graphixContactRouter);
 
 app.get('/', (req, res) => {
     res.status(200).json({

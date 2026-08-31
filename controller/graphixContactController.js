@@ -45,3 +45,43 @@ export const submitGraphixContactForm = async (req, res) => {
         });
     }
 };
+
+
+
+export const getGraphixContactForms = async (req, res) => {
+    try {
+        const contacts = await GraphixContact.find()
+            .sort({ createdAt: -1 })
+            .select("-__v")
+            .lean();
+
+        return res.status(200).json({
+            count: contacts.length,
+            contacts
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
+};
+
+
+export const deleteGraphixContactForm = async (req, res) => {
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ message: "Invalid contact ID" });
+        }
+
+        const contact = await GraphixContact.findByIdAndDelete(req.params.id);
+
+        if (!contact) {
+            return res.status(404).json({ message: "Graphix contact form not found" });
+        }
+
+        return res.status(200).json({ message: "Graphix contact form deleted successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+};
