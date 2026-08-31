@@ -4,7 +4,7 @@ import cors from 'cors';
 
 import { connectDB } from './config/db.js';
 import authRouter from './routes/authRoutes.js';
-
+import graphixContactRouter from './routes/graphixContactRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -35,10 +35,13 @@ app.use(
 );
 
 app.use(express.json());
-
+// connect to databse
 connectDB();
+// middleware
+app.use(express.json());
 
 app.use('/api/auth', authRouter);
+app.use('/api/graphixcontacts', graphixContactRouter);
 
 app.get('/', (req, res) => {
     res.status(200).json({
