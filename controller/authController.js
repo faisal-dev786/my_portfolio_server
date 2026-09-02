@@ -89,4 +89,80 @@ export const logOutUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
-}
+};
+
+export const resetPassword = async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+
+        if (!req.user || !req.user._id) {
+            return res.status(401).json({ message: "User not authenticated" });
+        }
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ message: "Current password and new password are required" });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({ message: "New password must be at least 6 characters long" });
+        }
+
+        const user = await userModel.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isCurrentPasswordValid) {
+            return res.status(400).json({ message: "Current password is incorrect" });
+        }
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+        await user.save();
+
+        res.status(200).json({ message: "Password reset successful" });
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
+};
+
+export const forgotPassword = async (req, res) => {
+    try {
+        const { useremail, newPassword, confirmPassword } = req.body;
+
+        if (!useremail || !newPassword || !confirmPassword) {
+            return res.status(400).json({ message: "Email, new password and confirm password are required" });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({ message: "New password must be at least 6 characters long" });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({ message: "New password and confirm password do not match" });
+        }
+
+        const user = await userModel.findOne({ useremail });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({ message: "Password updated successfully" });
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
+};
