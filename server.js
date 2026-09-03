@@ -16,6 +16,7 @@ const allowedOrigins = [
     'https://faisalgraphix.netlify.app',
     'https://faisalvisuals1.netlify.app',
     'https://alfaisalquranacademy.netlify.app',
+    'https://fasiportfoliodashboard.netlify.app/',
     'http://localhost:3000',
     'http://localhost:5173',
     'http://localhost:5174',
