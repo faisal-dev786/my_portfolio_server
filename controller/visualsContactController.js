@@ -6,34 +6,28 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const submitVisualsContactForm = async (req, res) => {
     try {
         const body = req.body ?? {};
-        const firstName = body.firstName ?? body.firstname;
-        const lastName = body.lastName ?? body.lastname;
-        const { email, message, messafe } = body;
+        const { name, email, message, messafe } = body;
         const contactMessage = message || messafe;
 
         if (
-            typeof firstName !== "string" ||
-            typeof lastName !== "string" ||
+            typeof name !== "string" ||
             typeof email !== "string" ||
             typeof contactMessage !== "string"
         ) {
             return res.status(400).json({
-                message: "First name, last name, email, and message are required"
+                message: "Name, email, and message are required"
             });
         }
 
-        const cleanFirstName = firstName.trim();
-        const cleanLastName = lastName.trim();
+        const cleanName = name.trim();
         const cleanEmail = email.trim().toLowerCase();
         const cleanMessage = contactMessage.trim();
 
         if (
-            !cleanFirstName ||
-            !cleanLastName ||
+            !cleanName ||
             !cleanMessage ||
             !emailPattern.test(cleanEmail) ||
-            cleanFirstName.length > 100 ||
-            cleanLastName.length > 100 ||
+            cleanName.length > 200 ||
             cleanEmail.length > 254 ||
             cleanMessage.length > 5000
         ) {
@@ -41,10 +35,8 @@ export const submitVisualsContactForm = async (req, res) => {
                 message: "Please provide valid contact form details"
             });
         }
-
         const contact = await VisualsContact.create({
-            firstName: cleanFirstName,
-            lastName: cleanLastName,
+            name: cleanName,
             email: cleanEmail,
             message: cleanMessage
         });
@@ -53,8 +45,7 @@ export const submitVisualsContactForm = async (req, res) => {
             message: "Visuals contact form submitted successfully",
             contact: {
                 id: contact._id,
-                firstName: contact.firstName,
-                lastName: contact.lastName,
+                name: contact.name,
                 email: contact.email,
                 message: contact.message
             }
@@ -71,7 +62,7 @@ export const getVisualsContactForms = async (req, res) => {
     try {
         const contacts = await VisualsContact.find()
             .sort({ createdAt: -1 })
-            .select("-__v")
+            .select("-__v -firstName -lastName")
             .lean();
 
         return res.status(200).json({

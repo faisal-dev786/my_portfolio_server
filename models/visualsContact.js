@@ -2,20 +2,9 @@ import mongoose from "mongoose";
 
 const visualsContactSchema = new mongoose.Schema(
     {
-        firstName: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 100
-        },
-        lastName: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 100
-        },
         name: {
             type: String,
+            required: true,
             trim: true,
             maxlength: 200
         },
