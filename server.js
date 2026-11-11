@@ -15,17 +15,14 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 const allowedOrigins = [
-    'https://faisalgraphix.netlify.app',
-    'https://faisalvisuals1.netlify.app',
-    'https://alfaisalquranacademy.netlify.app',
+    'https://faisal-graphix.vercel.app',
+    'https://faisal-uiux.vercel.app',
+    'https://alfaisalquranacademy.vercel.app',
     'https://faisal-project-dashboard.vercel.app',
     'http://localhost:3000',
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
-    'http://localhost:5176',
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
     'https://faisal-dev-nu.vercel.app'
 ];
 app.get("/api/health", (req, res) => {
