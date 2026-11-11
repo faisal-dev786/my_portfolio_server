@@ -5,27 +5,44 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const submitVisualsContactForm = async (req, res) => {
     try {
-        const { name, email, message, messafe } = req.body;
+        const body = req.body ?? {};
+        const { firstName, lastName, email, message, messafe } = body;
         const contactMessage = message || messafe;
 
-        if (!name || !email || !contactMessage) {
+        if (
+            typeof firstName !== "string" ||
+            typeof lastName !== "string" ||
+            typeof email !== "string" ||
+            typeof contactMessage !== "string"
+        ) {
             return res.status(400).json({
-                message: "Name, email, and message are required"
+                message: "First name, last name, email, and message are required"
             });
         }
 
-        const cleanName = name.trim();
+        const cleanFirstName = firstName.trim();
+        const cleanLastName = lastName.trim();
         const cleanEmail = email.trim().toLowerCase();
         const cleanMessage = contactMessage.trim();
 
-        if (!cleanName || !cleanMessage || !emailPattern.test(cleanEmail)) {
+        if (
+            !cleanFirstName ||
+            !cleanLastName ||
+            !cleanMessage ||
+            !emailPattern.test(cleanEmail) ||
+            cleanFirstName.length > 100 ||
+            cleanLastName.length > 100 ||
+            cleanEmail.length > 254 ||
+            cleanMessage.length > 5000
+        ) {
             return res.status(400).json({
-                message: "Please provide a valid name, email, and message"
+                message: "Please provide valid contact form details"
             });
         }
 
         const contact = await VisualsContact.create({
-            name: cleanName,
+            firstName: cleanFirstName,
+            lastName: cleanLastName,
             email: cleanEmail,
             message: cleanMessage
         });
@@ -34,7 +51,8 @@ export const submitVisualsContactForm = async (req, res) => {
             message: "Visuals contact form submitted successfully",
             contact: {
                 id: contact._id,
-                name: contact.name,
+                firstName: contact.firstName,
+                lastName: contact.lastName,
                 email: contact.email,
                 message: contact.message
             }

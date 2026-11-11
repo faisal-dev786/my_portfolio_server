@@ -19,11 +19,13 @@ const allowedOrigins = [
     'https://faisal-uiux.vercel.app',
     'https://alfaisalquranacademy.vercel.app',
     'https://faisal-project-dashboard.vercel.app',
+    'https://faisal-visuals.vercel.app',
+    'https://faisal-dev-nu.vercel.app',
     'http://localhost:3000',
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
-    'https://faisal-dev-nu.vercel.app'
+    'http://127.0.0.1:5500/'
 ];
 app.get("/api/health", (req, res) => {
     res.status(200).json({ message: "API is running" });
@@ -51,6 +53,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/graphix', graphixContactRouter);
 app.use('/api/quran-academy', quranAcademyContactRouter);
+app.use('/api/uiux', visualsContactRouter);
 app.use('/api/visuals', visualsContactRouter);
 app.use('/api/fullstack', fullstackContactRouter);
 app.use('/api/dashboard', dashboardRouter);

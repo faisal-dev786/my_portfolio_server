@@ -42,8 +42,11 @@ const formSources = [
         type: "visualsContact",
         label: "Visuals Contact",
         model: VisualsContact,
-        fields: "name email message",
-        getName: (entry) => entry.name,
+        fields: "firstName lastName name email message",
+        getName: (entry) =>
+            entry.firstName && entry.lastName
+                ? `${entry.firstName} ${entry.lastName}`
+                : entry.name,
         getDetails: (entry) => entry.message
     },
     {
