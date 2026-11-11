@@ -2,6 +2,8 @@ import FullstackContact from "../models/fullstackContact.js";
 import FullstackMeeting from "../models/fullstackMeeting.js";
 import GraphixContact from "../models/graphixContact.js";
 import QuranAcademyContact from "../models/quranAcademyContact.js";
+import UiuxContact from "../models/uiuxContact.js";
+import UiuxEmailContact from "../models/uiuxEmailContact.js";
 import VisualsContact from "../models/visualsContact.js";
 import VisualsEmailContact from "../models/visualsEmailContact.js";
 
@@ -42,6 +44,15 @@ const formSources = [
         type: "visualsContact",
         label: "Visuals Contact",
         model: VisualsContact,
+        fields: "name firstName lastName email message",
+        getName: (entry) =>
+            entry.name || `${entry.firstName ?? ""} ${entry.lastName ?? ""}`.trim(),
+        getDetails: (entry) => entry.message
+    },
+    {
+        type: "uiuxContact",
+        label: "UI/UX Contact",
+        model: UiuxContact,
         fields: "name email message",
         getName: (entry) => entry.name,
         getDetails: (entry) => entry.message
@@ -50,6 +61,14 @@ const formSources = [
         type: "visualsEmailContact",
         label: "Visuals Email Contact",
         model: VisualsEmailContact,
+        fields: "email",
+        getName: (entry) => entry.email,
+        getDetails: (entry) => "Email subscription"
+    },
+    {
+        type: "uiuxEmailContact",
+        label: "UI/UX Email Contact",
+        model: UiuxEmailContact,
         fields: "email",
         getName: (entry) => entry.email,
         getDetails: (entry) => "Email subscription"

@@ -7,6 +7,7 @@ import authRouter from './routes/authRoutes.js';
 import graphixContactRouter from './routes/graphixContactRoutes.js';
 import quranAcademyContactRouter from './routes/quranAcademyContactRoutes.js';
 import visualsContactRouter from './routes/visualsContactRoutes.js';
+import uiuxContactRouter from './routes/uiuxContactRoutes.js';
 import fullstackContactRouter from './routes/fullstackContactRoutes.js';
 import dashboardRouter from './routes/dashboardRoutes.js';
 dotenv.config();
@@ -26,7 +27,7 @@ const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
-    'http://127.0.0.1:5500/'
+    'http://127.0.0.1:5500'
 ];
 app.get("/api/health", (req, res) => {
     res.status(200).json({ message: "API is running" });
@@ -54,7 +55,7 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/graphix', graphixContactRouter);
 app.use('/api/quran-academy', quranAcademyContactRouter);
-app.use('/api/uiux', visualsContactRouter);
+app.use('/api/uiux', uiuxContactRouter);
 app.use('/api/visuals', visualsContactRouter);
 app.use('/api/fullstack', fullstackContactRouter);
 app.use('/api/dashboard', dashboardRouter);
