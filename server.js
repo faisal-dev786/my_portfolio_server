@@ -21,6 +21,7 @@ const allowedOrigins = [
     'https://faisal-project-dashboard.vercel.app',
     'https://faisal-visuals.vercel.app',
     'https://faisal-dev-nu.vercel.app',
+    'https://faisalnadeem.site/',
     'http://localhost:3000',
     'http://localhost:5173',
     'http://localhost:5174',

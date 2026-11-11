@@ -6,7 +6,9 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const submitVisualsContactForm = async (req, res) => {
     try {
         const body = req.body ?? {};
-        const { firstName, lastName, email, message, messafe } = body;
+        const firstName = body.firstName ?? body.firstname;
+        const lastName = body.lastName ?? body.lastname;
+        const { email, message, messafe } = body;
         const contactMessage = message || messafe;
 
         if (
