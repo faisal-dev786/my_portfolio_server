@@ -7,6 +7,8 @@ import authRouter from './routes/authRoutes.js';
 import graphixContactRouter from './routes/graphixContactRoutes.js';
 import quranAcademyContactRouter from './routes/quranAcademyContactRoutes.js';
 import visualsContactRouter from './routes/visualsContactRoutes.js';
+import fullstackContactRouter from './routes/fullstackContactRoutes.js';
+import dashboardRouter from './routes/dashboardRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -53,6 +55,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/graphix', graphixContactRouter);
 app.use('/api/quran-academy', quranAcademyContactRouter);
 app.use('/api/visuals', visualsContactRouter);
+app.use('/api/fullstack', fullstackContactRouter);
+app.use('/api/dashboard', dashboardRouter);
 app.get('/', (req, res) => {
     res.status(200).json({
         message: 'API is running successfully'
